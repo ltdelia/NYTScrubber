@@ -1,5 +1,4 @@
-var React = require('react');
-var Router = require('react-router');
+var React = require('react');	
 
 var Search = require('./Search.js');
 var Saved = require('./Saved');
