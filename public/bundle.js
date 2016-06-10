@@ -24443,19 +24443,28 @@
 				topic: "",
 				startYear: "",
 				endYear: "",
-				results: []
+				results: {}
 			};
 		},
 		componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
 			console.log("Topic: ", this.state.topic);
 			console.log("Start Year: ", this.state.startYear);
 			console.log("End Year: ", this.state.endYear);
-
 			console.log("Previous State: ", prevState);
-			console.log("Previous Props: ", prevProps);
+
+			if (this.state.topic != "" && (prevState.topic != this.state.topic || prevState.startYear != this.state.startYear || prevState.endYear != this.state.endYear)) {
+
+				helpers.getArticlesByQuery(this.state.topic, this.state.startYear, this.state.endYear).then(function (data) {
+					console.log("Response from NYT: ", data);
+					if (data != this.state.results) {
+						this.setState({
+							results: data.results.data.response
+						});
+					}
+				}.bind(this));
+			}
 		},
 		setQuery: function setQuery(newTopic, newStart, newEnd) {
-			console.log("TESTING OUR SETQUERY FUNCTION");
 			this.setState({
 				topic: newTopic,
 				startYear: newStart,
@@ -24542,13 +24551,13 @@
 										null,
 										"Start Year"
 									),
-									React.createElement("input", { type: "text", className: "form-control", id: "start", value: this.state.value, onChange: this.handleChange, required: true }),
+									React.createElement("input", { type: "number", className: "form-control", id: "start", value: this.state.value, onChange: this.handleChange, required: true }),
 									React.createElement(
 										"h4",
 										null,
 										"End Year"
 									),
-									React.createElement("input", { type: "text", className: "form-control", id: "end", value: this.state.value, onChange: this.handleChange, required: true })
+									React.createElement("input", { type: "number", className: "form-control", id: "end", value: this.state.value, onChange: this.handleChange, required: true })
 								),
 								React.createElement(
 									"div",
@@ -24584,6 +24593,14 @@
 	var Results = React.createClass({
 		displayName: "Results",
 
+		getInitialState: function getInitialState() {
+			console.log(this.props.results);
+			return {
+				title: "",
+				date: "",
+				url: ""
+			};
+		},
 		render: function render() {
 			return React.createElement(
 				"div",
@@ -24603,11 +24620,7 @@
 								"Results"
 							)
 						),
-						React.createElement(
-							"div",
-							{ className: "panel-body" },
-							this.props.results
-						)
+						React.createElement("div", { className: "panel-body" })
 					)
 				)
 			);
@@ -24620,9 +24633,24 @@
 /* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var axios = __webpack_require__(212);
+
+	var helpers = {
+		getArticlesByQuery: function getArticlesByQuery(topic, start, end) {
+			var key = "8fe067cb1c434c4bab794b1c72a7e0db";
+			start += "0101";
+			end += "0101";
+			return axios.get('http://api.nytimes.com/svc/search/v2/articlesearch.json?apikey=' + key + '&q=' + topic + '&begin_date=' + start + '&end_date=' + end + '&sort=newest').then(function (response) {
+				return {
+					results: response
+				};
+			});
+		}
+	};
+
+	module.exports = helpers;
 
 /***/ },
 /* 212 */

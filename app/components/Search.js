@@ -11,19 +11,30 @@ var Search = React.createClass({
 			topic: "",
 			startYear: "",
 			endYear: "",
-			results: []
+			results: {}
 		}
 	},
 	componentDidUpdate: function(prevProps, prevState){
 		console.log("Topic: ", this.state.topic);
 		console.log("Start Year: ", this.state.startYear);
 		console.log("End Year: ", this.state.endYear);
-
 		console.log("Previous State: ", prevState);
-		console.log("Previous Props: ", prevProps);
+
+		if(this.state.topic != "" && (prevState.topic != this.state.topic || prevState.startYear != this.state.startYear || prevState.endYear != this.state.endYear)){
+
+			helpers.getArticlesByQuery(this.state.topic, this.state.startYear, this.state.endYear)
+				.then(function(data){
+					console.log("Response from NYT: ", data);
+					if(data != this.state.results){
+						this.setState({
+							results: data.results.data.response
+						})
+					}
+				}.bind(this))
+
+		}
 	},	
 	setQuery: function(newTopic, newStart, newEnd){
-		console.log("TESTING OUR SETQUERY FUNCTION");
 		this.setState({
 			topic: newTopic,
 			startYear: newStart,
@@ -35,7 +46,7 @@ var Search = React.createClass({
 		return(
 			<div className="main-container">
 				<Query updateSearch={this.setQuery}/>
-				<Results results={this.state.results} />
+				<Results results={this.state.results}/>
 			</div>
 		)
 	}

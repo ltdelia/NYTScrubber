@@ -1,6 +1,14 @@
 var React = require('react');
 
 var Results = React.createClass({
+	getInitialState: function(){
+		console.log(this.props.results);
+		return{
+			title: "",
+			date: "",
+			url: ""
+		}
+	},
 	render: function(){
 		return(
 			<div className="row">
@@ -11,7 +19,6 @@ var Results = React.createClass({
 							<h1 className="panel-title">Results</h1>
 						</div>
 						<div className="panel-body">
-							{this.props.results}
 						</div>
 					</div>
 
