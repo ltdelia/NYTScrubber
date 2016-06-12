@@ -2,7 +2,6 @@ var React = require('react');
 
 var Results = React.createClass({
 	getInitialState: function(){
-		console.log(this.props.results);
 		return{
 			title: "",
 			date: "",
@@ -19,6 +18,16 @@ var Results = React.createClass({
 							<h1 className="panel-title">Results</h1>
 						</div>
 						<div className="panel-body">
+							{this.props.results.map(function(result, index){
+
+								return(
+										<li className="list-group-item" key={index}>
+											{result.headline.main && <h2>{result.headline.main}</h2>}
+											{result.pub_date && <p>{result.pub_date}</p>}
+											{result.web_url && <a type="button" href={result.web_url} target="_blank" className="btn btn-primary">View Article</a>}
+										</li>
+								)
+							})}
 						</div>
 					</div>
 

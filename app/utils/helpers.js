@@ -7,9 +7,7 @@ var helpers = {
 	end += "0101";
 	return axios.get('http://api.nytimes.com/svc/search/v2/articlesearch.json?apikey=' + key + '&q=' + topic + '&begin_date=' + start + '&end_date=' + end + '&sort=newest')
 		.then(function(response){
-			return {
-				results: response
-			}
+			return response.data.response.docs;
 		})
 	}
 }
