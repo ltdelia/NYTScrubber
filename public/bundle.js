@@ -24443,7 +24443,7 @@
 				topic: "",
 				startYear: "",
 				endYear: "",
-				results: {}
+				results: []
 			};
 		},
 		componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
@@ -24458,7 +24458,7 @@
 					console.log("Response from NYT: ", data);
 					if (data != this.state.results) {
 						this.setState({
-							results: data.results.data.response
+							results: data
 						});
 					}
 				}.bind(this));
@@ -24594,7 +24594,6 @@
 		displayName: "Results",
 
 		getInitialState: function getInitialState() {
-			console.log(this.props.results);
 			return {
 				title: "",
 				date: "",
@@ -24620,7 +24619,32 @@
 								"Results"
 							)
 						),
-						React.createElement("div", { className: "panel-body" })
+						React.createElement(
+							"div",
+							{ className: "panel-body" },
+							this.props.results.map(function (result, index) {
+
+								return React.createElement(
+									"li",
+									{ className: "list-group-item", key: index },
+									result.headline.main && React.createElement(
+										"h2",
+										null,
+										result.headline.main
+									),
+									result.pub_date && React.createElement(
+										"p",
+										null,
+										result.pub_date
+									),
+									result.web_url && React.createElement(
+										"a",
+										{ type: "button", href: result.web_url, target: "_blank", className: "btn btn-primary" },
+										"View Article"
+									)
+								);
+							})
+						)
 					)
 				)
 			);
@@ -24643,9 +24667,7 @@
 			start += "0101";
 			end += "0101";
 			return axios.get('http://api.nytimes.com/svc/search/v2/articlesearch.json?apikey=' + key + '&q=' + topic + '&begin_date=' + start + '&end_date=' + end + '&sort=newest').then(function (response) {
-				return {
-					results: response
-				};
+				return response.data.response.docs;
 			});
 		}
 	};

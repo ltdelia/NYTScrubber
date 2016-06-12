@@ -11,7 +11,7 @@ var Search = React.createClass({
 			topic: "",
 			startYear: "",
 			endYear: "",
-			results: {}
+			results: []
 		}
 	},
 	componentDidUpdate: function(prevProps, prevState){
@@ -27,7 +27,7 @@ var Search = React.createClass({
 					console.log("Response from NYT: ", data);
 					if(data != this.state.results){
 						this.setState({
-							results: data.results.data.response
+							results: data
 						})
 					}
 				}.bind(this))
