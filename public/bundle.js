@@ -25844,18 +25844,43 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(1);
 
 	var Saved = React.createClass({
-		displayName: 'Saved',
+		displayName: "Saved",
 
 		render: function render() {
 			return React.createElement(
-				'p',
-				null,
-				'Saved'
+				"div",
+				{ className: "row" },
+				React.createElement(
+					"div",
+					{ className: "col-lg-12" },
+					React.createElement(
+						"div",
+						{ className: "panel panel-primary" },
+						React.createElement(
+							"div",
+							{ className: "panel-heading" },
+							React.createElement(
+								"h1",
+								{ className: "panel-title" },
+								"Saved Articles"
+							)
+						),
+						React.createElement(
+							"div",
+							{ className: "panel-body" },
+							React.createElement(
+								"p",
+								null,
+								"Saved Articles will go here."
+							)
+						)
+					)
+				)
 			);
 		}
 	});
