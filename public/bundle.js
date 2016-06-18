@@ -24641,6 +24641,11 @@
 										"a",
 										{ type: "button", href: result.web_url, target: "_blank", className: "btn btn-primary" },
 										"View Article"
+									),
+									React.createElement(
+										"a",
+										{ type: "button", className: "btn btn-warning" },
+										"Save"
 									)
 								);
 							})
