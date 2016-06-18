@@ -16,4 +16,15 @@ module.exports = function(app){
 			}
 		}
 	});
+
+	app.get('/articles/:id', function(req, res){
+		Article.findOne({'_id': req.params.id})
+		.exec(function(err, doc){
+			if(err){
+				console.log(err);
+			}else{
+				res.json(doc);
+			}
+		});
+	});
 }
