@@ -25,6 +25,7 @@ var Results = React.createClass({
 											{result.headline.main && <h2>{result.headline.main}</h2>}
 											{result.pub_date && <p>{result.pub_date}</p>}
 											{result.web_url && <a type="button" href={result.web_url} target="_blank" className="btn btn-primary">View Article</a>}
+											<a type="button" className="btn btn-warning">Save</a>
 										</li>
 								)
 							})}
