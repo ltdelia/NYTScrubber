@@ -9,7 +9,7 @@
   "author": "Louis T. Delia",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.12.0",
+    "axios": "^0.26.1",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "history": "^1.13.1",
